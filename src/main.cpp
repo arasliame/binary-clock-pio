@@ -19,6 +19,7 @@ void setup() {
 
 void loop() {
   
+//confirm RTC is still good
   if (!Rtc.IsDateTimeValid()) 
     {
         if (Rtc.LastError() != 0)
@@ -37,10 +38,12 @@ void loop() {
         }
     }
 
+//calculate dates
+    RtcDateTime now = Rtc.GetDateTime(); //calculate time now
+    RtcDateTime future = dateEnd(6,now); //calculate date that you want to count down to
+    unsigned long diffSecs = future-now; //find difference in secs
 
-    RtcDateTime now = Rtc.GetDateTime();
-    RtcDateTime future = dateEnd(6,now); //specify what unit you want to count to
-    unsigned long diffSecs = future-now;
+//print some stuff
     Serial.print("now:      ");
     printDateTime(now);
     Serial.println();
@@ -52,8 +55,8 @@ void loop() {
     Serial.println();
     Serial.println();
 
+//display to the LED matrix
   numToBits(diffSecs, matrix);
   displayBits(matrixHeight, matrix);
-
 
 }
