@@ -118,7 +118,9 @@ RtcDateTime dateAddOne(int datePart, RtcDateTime cur) {
     if (datePart==6) {
         return RtcDateTime(cur.Year()+1, cur.Month(), cur.Day(), cur.Hour(), cur.Minute(), cur.Second()); //add a month
     }
-
+    else {
+        return cur; //idk probably need better error handling
+    }
 }
 
 
@@ -143,5 +145,8 @@ RtcDateTime dateEnd(int datePart, RtcDateTime cur) {
     }
     if (datePart==6) { //beginning of next year
         return RtcDateTime(future.Year(), 1, 1, 0, 0, 0); 
+    }
+    else {
+        return cur; //idk probably need better error handling
     }
 }
