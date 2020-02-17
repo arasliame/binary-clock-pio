@@ -37,22 +37,23 @@ void loop() {
         }
     }
 
-    Serial.print("now:   ");
+
     RtcDateTime now = Rtc.GetDateTime();
+    RtcDateTime future = dateEnd(6,now); //specify what unit you want to count to
+    unsigned long diffSecs = future-now;
+    Serial.print("now:      ");
     printDateTime(now);
     Serial.println();
-    Serial.print("future:");
-    RtcDateTime now2 = dateEnd(1,now);
-    printDateTime(now2);
+    Serial.print("future:   ");
+    printDateTime(future);
     Serial.println();
-    unsigned long diffSecs = now2-now;
-    Serial.println();
-    Serial.print("diff:");
+    Serial.print("diffSecs: ");
     Serial.print(diffSecs);
     Serial.println();
+    Serial.println();
 
-  resetMatrix(matrixHeight, matrix);
-  countDown(5);
+  numToBits(diffSecs, matrix);
+  displayBits(matrixHeight, matrix);
 
 
 }
