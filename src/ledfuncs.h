@@ -13,8 +13,8 @@ LedControl lc = LedControl(12, 10, 11, 1);
 unsigned long delaytime1 = 1000;
 unsigned long delaytime2 = 50;
 
-int const matrixHeight = 5; //number of rows in of LED matrix
-int const matrixWidth = 6; //max width is 8, best dimensions are 5*5 or 5*6
+int const matrixHeight = 4; //number of rows in of LED matrix
+int const matrixWidth = 8; //max width is 8, best dimensions are 5*5 or 5*6
 byte const widthMask = (1 << matrixWidth) - 1;
 
 byte matrix[matrixHeight];
