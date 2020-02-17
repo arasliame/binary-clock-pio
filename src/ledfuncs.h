@@ -36,11 +36,13 @@ void ledSetup() {
 void numToBits(unsigned long value, byte arr[]) {
   //could use some error checking
   int row = 0;
-  for (value; value > 0; value >>= matrixWidth) {
+  while (value > 0) { 
     arr[row] = byte(value) & widthMask;
     row++;//array row
+    value >>= matrixWidth;
   }
 }
+
 
 void resetMatrix(int size, byte arr[]) {
   for (int row = 0; row < size; row++) {

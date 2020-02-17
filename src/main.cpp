@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <clockfuncs.h>
-#include <counting.h>
+#include <ledfuncs.h>
 
 
 
@@ -44,7 +44,7 @@ void loop() {
     Serial.print("now:      ");
     printDateTime(now);
     Serial.println();
-    Serial.print("future:   ");
+    Serial.print("countTo:  ");
     printDateTime(future);
     Serial.println();
     Serial.print("diffSecs: ");
