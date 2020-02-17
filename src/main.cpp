@@ -5,14 +5,10 @@
 
 
 void setup() {
-  
-  // put your setup code here, to run once:
-    
-    //time_t now = Rtc.GetDateTime();
+
     Serial.begin(9600); //debugging
     ledSetup();
     timeSetup();
-
    
 }
 
