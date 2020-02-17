@@ -42,8 +42,13 @@ void loop() {
     printDateTime(now);
     Serial.println();
     Serial.print("future:");
-    RtcDateTime now2 = dateAddOne(5,now);
+    RtcDateTime now2 = dateEnd(1,now);
     printDateTime(now2);
+    Serial.println();
+    unsigned long diffSecs = now2-now;
+    Serial.println();
+    Serial.print("diff:");
+    Serial.print(diffSecs);
     Serial.println();
 
   resetMatrix(matrixHeight, matrix);

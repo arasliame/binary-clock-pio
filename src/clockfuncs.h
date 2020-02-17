@@ -2,8 +2,6 @@
 #include <RtcDS3231.h>
 RtcDS3231<TwoWire> Rtc(Wire);
 
-
-
 void timeSetup() {
     
     Serial.print("compiled: ");
@@ -92,26 +90,6 @@ void printDateTime(const RtcDateTime& dt)
     Serial.print(datestring);
 }
 
-/*
-seconds = 1
-minutes = 60
-hours = 60*60
-day = hours * 24
-week = days * 7
-month = 6 probably don't need to do this conversion?
-year = 7
-*/
-
-/*
-unsigned long diffDates(int unit,time_t inputDate) {
-  
-}
-*/
-/*
-RtcDateTime timeToSet;
-
-timeToSet.InitWithEpoch32Time(myEpochTimeValue);
-rtcObject.SetDateTime(timeToSet);*/
 
 RtcDateTime dateAddOne(int datePart, RtcDateTime cur) {
     //return RtcDateTime(cur.year(), cur.month(), cur.dayOfMonth(), cur.hour(), cur.minute(), cur.second());
@@ -120,13 +98,13 @@ RtcDateTime dateAddOne(int datePart, RtcDateTime cur) {
         return (cur + 60); 
     }
     if (datePart==2) { //add an hour
-        return (cur + (60*60)); 
+        return (cur + (60UL*60UL)); 
     }
     if (datePart==3) {
-        return (cur + (60*60*24)); //add a day
+        return (cur + (60UL*60UL*24UL)); //add a day
     }
     if (datePart==4) {
-        return (cur + (60*60*24*7)); //add a week
+        return (cur + (60UL*60UL*24UL*7UL)); //add a week
     }
     if (datePart==5) {
         int mon = cur.Month()+1;
@@ -140,8 +118,30 @@ RtcDateTime dateAddOne(int datePart, RtcDateTime cur) {
     if (datePart==6) {
         return RtcDateTime(cur.Year()+1, cur.Month(), cur.Day(), cur.Hour(), cur.Minute(), cur.Second()); //add a month
     }
-   // now (with unit) plus 1 is the date to count to
+
+}
 
 
-
+RtcDateTime dateEnd(int datePart, RtcDateTime cur) {
+    //return RtcDateTime(cur.year(), cur.month(), cur.dayOfMonth(), cur.hour(), cur.minute(), cur.second());
+    RtcDateTime future = dateAddOne(datePart,cur);
+    if (datePart==1) { //start of next minute
+        return RtcDateTime(future.Year(), future.Month(), future.Day(), future.Hour(), future.Minute(), 0);
+    }
+    if (datePart==2) { //start of next hour
+        return RtcDateTime(future.Year(), future.Month(), future.Day(), future.Hour(), 0, 0); 
+    }
+    if (datePart==3) { //start of next day
+        return RtcDateTime(future.Year(), future.Month(), future.Day(), 0, 0, 0);
+    }
+    if (datePart==4) { //start of next week, starting Sunday
+        future = cur + (60UL*60UL*24UL*(7-cur.DayOfWeek()));
+        return RtcDateTime(future.Year(), future.Month(), future.Day(), 0, 0, 0); 
+    }
+    if (datePart==5) { //beginning of next month
+        return RtcDateTime(future.Year(), future.Month(), 1, 0, 0, 0); 
+    }
+    if (datePart==6) { //beginning of next year
+        return RtcDateTime(future.Year(), 1, 1, 0, 0, 0); 
+    }
 }
